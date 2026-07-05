@@ -5,19 +5,49 @@ Dialogue turns + user profile → top-20 track retrieval + a natural-language re
 
 Final pipeline (TID `ensemble__bm25_qmr-qemb_twotower_8b__gbm`):
 
-```
-        ┌─ BM25 (music-only query, noun tags, spaCy) ─┐
-query ──┤                                              ├─ RRF ─┐
-        └─ metadata-rich dense (Qwen3-Embedding-0.6B) ─┘       ├─ 6-way RRF ─ GBM rerank ─ top-20
-dialogue ── two-tower dense (Qwen3-Embedding-8B QLoRA,         │  (LightGBM lambdarank,
-            5-fold bag, ANN) ──────────────────────────────────┘   leakage-free OOF features)
-                                                                        │
-                                              PAS few-shot response (GLM-5.2)
+```mermaid
+flowchart LR
+    Q["query"] --> BM25["BM25<br/>(music-only query,<br/>noun tags, spaCy)"]
+    Q --> MRD["metadata-rich dense<br/>(Qwen3-Embedding-0.6B)"]
+    D["dialogue"] --> TT["two-tower dense<br/>(Qwen3-Embedding-8B QLoRA,<br/>5-fold bag, ANN)"]
+
+    BM25 --> RRF1["RRF"]
+    MRD --> RRF1
+    RRF1 --> RRF6["6-way RRF"]
+    TT --> RRF6
+
+    RRF6 --> GBM["GBM rerank<br/>(LightGBM lambdarank,<br/>leakage-free OOF features)"]
+    GBM --> TOP20["top-20"]
+    TOP20 --> PAS["PAS few-shot response<br/>(GLM-5.2)"]
 ```
 
 Only public dependencies: HuggingFace `talkpl-ai/TalkPlayData-Challenge-*` datasets,
 Ollama `qwen3-embedding:0.6b`, `Qwen/Qwen3-Embedding-8B`, LightGBM, and any
 OpenAI-compatible chat API for responses (we use z.ai `glm-5.2`).
+
+## External platform — z.ai (GLM-5.2 response generation)
+
+The response-generation step is the only part of the pipeline that calls an
+external, paid platform. It uses [Z.ai's commercial API](https://docs.z.ai/api-reference/llm/chat-completion),
+an OpenAI-compatible chat endpoint, to run `glm-5.2` (the internal training/serving
+catalog name `zai-org/glm-5.2-fp8` refers to the same model family; the public API
+uses `glm-5.2`). Z.ai does not offer an embeddings API, so all embedding calls
+(`metadata-rich` retrieval and PAS demo matching) stay on the local Ollama
+`qwen3-embedding:0.6b` model — there is no external embedding dependency.
+
+Required environment variables (see `.env.example`):
+
+| Variable | Value | Why |
+|---|---|---|
+| `MYMODULE_CHAT_PROVIDER` | `openai` | Routes response generation through the OpenAI-compatible client; the default is `ollama`, so this must be set explicitly |
+| `MYMODULE_LLM_OPENAI_URL` | `https://api.z.ai/api/paas/v4` | Z.ai chat-completions base URL |
+| `MYMODULE_LLM_OPENAI_MODEL` | `glm-5.2` | Public API model name |
+| `MYMODULE_LLM_OPENAI_API_KEY` | *(your z.ai key)* | Bearer-token auth, OpenAI-compatible |
+| `MYMODULE_LLM_MAX_TOKENS` | `32768` | GLM-5.2 is a reasoning model; a lower budget (e.g. 1024/3000) truncates output to an empty response |
+
+`bin/stage1_inference.sh` already sets sane defaults for all of the above except
+the API key. To verify retrieval alone without a z.ai key, run with
+`RESPONSE_GEN=noop` (see Stage 1 below).
 
 ## Technical References
 
