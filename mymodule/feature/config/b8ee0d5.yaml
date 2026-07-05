@@ -1,0 +1,9 @@
+sha: b8ee0d5
+artifacts:
+  response-pas-ckpt.tar.gz:
+    type: ckpt
+    strategy: response
+    adapter_name: pas
+    size_bytes: 64201
+    sha256: 098fa947a2f53547f9c0ea88b0d00faa98757d47550fc7238a774d137ac27c65
+    uploaded_at: '2026-06-26T15:05:50Z'

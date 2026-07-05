@@ -1,0 +1,9 @@
+sha: f19c115
+artifacts:
+  pas-ckpt-openai.tar.gz:
+    type: ckpt
+    strategy: pas
+    adapter_name: openai
+    size_bytes: 629647
+    sha256: 401c89fea66db89a3ac0902401af04320cce7e277bc11987c2bd93a16df24356
+    uploaded_at: '2026-06-15T23:01:29Z'

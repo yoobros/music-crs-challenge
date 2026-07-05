@@ -1,0 +1,15 @@
+sha: 3c3c859
+artifacts:
+  twotower-data.tar.gz:
+    type: model
+    strategy: twotower
+    size_bytes: 322849226
+    sha256: 3c9bcebcf3c648a9448dcb9ac7f7f23df69fa3a6dc967cc6e67bc79aaaaa9154
+    uploaded_at: '2026-05-20T08:48:58Z'
+  twotower-ckpt-qwen3emb06b_lora_full.tar.gz:
+    type: ckpt
+    strategy: twotower
+    adapter_name: qwen3emb06b_lora_full
+    size_bytes: 22260578
+    sha256: c705b6ba191fa892fd800bc6f6970c7012be8874cffcb367b9ca4103faa9835a
+    uploaded_at: '2026-05-20T08:49:05Z'

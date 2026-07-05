@@ -1,0 +1,95 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+
+# Virtual environment
+.venv/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Data
+*.parquet
+*.csv
+*.h5
+data/
+tmp/
+
+# Experiment outputs
+mymodule/exp/
+.submission_staging/
+
+# LanceDB cache
+mymodule/feature/.lancedb/
+
+# RocksDB cache
+mymodule/feature/.rocksdb/
+
+# BM25 cache
+mymodule/feature/.bm25_cache/
+
+# Feature store archives (mymodule/feature/remote.py output)
+features*.tar.gz
+features*.tar.gz.sha256
+
+# Repo-local staging for `mymodule.feature.remote download` (snap rclone safe;
+# context-manager-cleaned but leftover dirs from crashes shouldn't be committed)
+mymodule/feature/.dl-*/
+
+# SASRec checkpoints + Lightning logs
+mymodule/strategies/sasrec/ckpt/
+mymodule/strategies/sasrec/lightning_logs/
+
+# LDA checkpoints
+mymodule/strategies/lda/ckpt/
+# ALS checkpoints
+mymodule/strategies/als/ckpt/
+
+# GBM reranker artifacts (OOF features parquet + trained model checkpoints)
+mymodule/strategies/rerank/gbm/oof/
+mymodule/strategies/rerank/gbm/ckpt/
+
+# CrossEncoder reranker artifacts (trained adapters + training data)
+mymodule/strategies/rerank/crossenc/ckpt/
+mymodule/strategies/rerank/crossenc/data/
+
+# TwoTower checkpoints + local training logs
+mymodule/strategies/twotower/ckpt/
+mymodule/strategies/twotower/data/*.npz
+
+# GGUF model files (large binary)
+*.gguf
+
+# Query rewrite map artifacts (generated)
+mymodule/strategies/query_rewrite/map/
+
+# wandb logs
+wandb/
+
+# Claude Code local settings
+.claude/settings.local.json
+
+# Environment — never commit secrets. `.env.example` is the tracked template.
+.env
+.env.*
+!.env.example
+
+# Infisical CLI workspace link (per-clone, contains workspace ID)
+.infisical.json
+
+# OS
+.DS_Store
+mymodule/strategies/response/ckpt/
+
+# Large experiment artifacts (reports in .md are kept, raw logs/jsonl excluded)
+scripts/*.log
+scripts/*_results.jsonl
+scripts/*.bak
+
+# Claude Code runtime
+.claude/scheduled_tasks.lock

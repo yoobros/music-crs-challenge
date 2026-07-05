@@ -1,0 +1,80 @@
+# PAS response generation rules — single source of truth.
+#
+# Consumed by:
+#   - signature.py            — embedded into the DSPy prompt (length budget,
+#                               track count policy) so the LLM sees the same
+#                               numbers we will accept/reject by.
+#   - optimize.py             — compile-time accept/reject metric reads
+#                               `response_length.compile_floor_words /
+#                               compile_ceiling_words` and
+#                               `compile_metric.threshold`.
+#   - select.py / generator   — runtime post-process (hard cap enforcement,
+#                               retry decisions).
+#
+# Edit here when adjusting word-budget / threshold knobs. Tests under
+# `tests/strategies/response/test_pas_rules.py` enforce that the docstring
+# numbers in signature.py stay in sync with this file.
+
+version: 1
+
+# -----------------------------------------------------------------------------
+# Response length budget — spec-aware bands + global hard cap.
+# Derived from PR #80 devset GT analysis (HH/HL ~30w, LH/LL ~44w, ±10w noise
+# floor). The compile_floor/ceiling are deliberately looser than per-spec bands
+# so smoke compiles with small N don't reject borderline-compliant demos.
+# -----------------------------------------------------------------------------
+response_length:
+  specificity:
+    HH:
+      lower_words: 25
+      upper_words: 45
+      gt_avg_words: 33
+      notes: "specific goal, specific track. brief declarative."
+    HL:
+      lower_words: 25
+      upper_words: 45
+      gt_avg_words: 30
+      notes: "specific goal, general track. emphatic conviction."
+    LH:
+      lower_words: 35
+      upper_words: 55
+      gt_avg_words: 44
+      notes: "general goal, specific track. memory-match invite."
+    LL:
+      lower_words: 35
+      upper_words: 55
+      gt_avg_words: 44
+      notes: "general goal, general track. atmosphere-anchored."
+  # NEVER exceed regardless of specificity. Style (Step 3) detail gets cut first.
+  hard_cap_words: 120
+  # Compile-time global floor (applied when specificity unknown OR per-spec
+  # bands are too tight for small-N smoke). ~10w margin under HH lower 25w.
+  compile_floor_words: 15
+  # Compile-time global ceiling — ~10w margin over hard_cap_words.
+  compile_ceiling_words: 130
+
+# -----------------------------------------------------------------------------
+# Track citation policy.
+# -----------------------------------------------------------------------------
+track_count:
+  default: 1
+  max: 2
+  # Plural framings that authorize up to `max` tracks. Informational for now;
+  # consumed by future signature templating.
+  multi_keywords:
+    - "recommend several"
+    - "give me a few"
+    - "multiple songs"
+    - "multiple tracks"
+    - "show me a couple"
+    - "what else is"
+
+# -----------------------------------------------------------------------------
+# Compile metric.
+# -----------------------------------------------------------------------------
+compile_metric:
+  # Judge mean_normalized pass threshold (~ avg dim score = 3 "Adequate").
+  threshold: 0.5
+  # Lexical-diversity novelty blend weight. 0.0 = pure judge (production
+  # default). Raise to e.g. 0.2 for diversity-leaning compile experiments.
+  novelty_weight: 0.0

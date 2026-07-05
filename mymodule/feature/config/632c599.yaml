@@ -1,0 +1,43 @@
+sha: 632c599
+artifacts:
+  twotower-data.tar.gz:
+    type: model
+    strategy: twotower
+    size_bytes: 2760557101
+    sha256: 0ec52ae97a95ea94d13c31318abf8466b19cae4f82962e00a59fe49ac58c133c
+    uploaded_at: '2026-05-31T06:06:03Z'
+  twotower-ckpt-qwen3emb06b_lora_full_fold0.tar.gz:
+    type: ckpt
+    strategy: twotower
+    adapter_name: qwen3emb06b_lora_full_fold0
+    size_bytes: 77634303
+    sha256: ecb2419e4a18bd2588a8697907c92a05e9ebe4011810a64ee174dbba1bd8174c
+    uploaded_at: '2026-05-31T06:06:25Z'
+  twotower-ckpt-qwen3emb06b_lora_full_fold1.tar.gz:
+    type: ckpt
+    strategy: twotower
+    adapter_name: qwen3emb06b_lora_full_fold1
+    size_bytes: 77633116
+    sha256: 9b2b82d3681d5080ddadddb6e257d535255ce85c04b62213edf62bc1500d180a
+    uploaded_at: '2026-05-31T06:06:51Z'
+  twotower-ckpt-qwen3emb06b_lora_full_fold2.tar.gz:
+    type: ckpt
+    strategy: twotower
+    adapter_name: qwen3emb06b_lora_full_fold2
+    size_bytes: 77637125
+    sha256: b17729761be5e920d7798ad53c4944567df1993167dca74404effc6fa87118bb
+    uploaded_at: '2026-05-31T06:07:19Z'
+  twotower-ckpt-qwen3emb06b_lora_full_fold3.tar.gz:
+    type: ckpt
+    strategy: twotower
+    adapter_name: qwen3emb06b_lora_full_fold3
+    size_bytes: 77638147
+    sha256: 4eb09ab1ee4ea700828911ff2fbff92b69eea50700351f7ce99dec58bc8e54b8
+    uploaded_at: '2026-05-31T06:07:41Z'
+  twotower-ckpt-qwen3emb06b_lora_full_fold4.tar.gz:
+    type: ckpt
+    strategy: twotower
+    adapter_name: qwen3emb06b_lora_full_fold4
+    size_bytes: 77636863
+    sha256: 150b88a3a49aee4e67c34ebd28015dd8f160327004da384220a26aadea125f16
+    uploaded_at: '2026-05-31T06:08:04Z'

@@ -1,0 +1,11 @@
+sha: c55625d
+artifacts:
+  features.tar.gz:
+    type: db
+    size_bytes: null
+    sha256: null
+    uploaded_at: null
+    note: |
+      Backfilled manifest — uploaded before the auto-register hook existed.
+      size_bytes/sha256/uploaded_at unknown. Next upload from this SHA will
+      overwrite with real values.

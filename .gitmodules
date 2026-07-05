@@ -1,0 +1,6 @@
+[submodule "music-crs-evaluator"]
+	path = music-crs-evaluator
+	url = https://github.com/nlp4musa/music-crs-evaluator.git
+[submodule "music-crs-baselines"]
+	path = music-crs-baselines
+	url = https://github.com/nlp4musa/music-crs-baselines.git
