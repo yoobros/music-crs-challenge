@@ -123,7 +123,7 @@ def _load_doc_cache(path: Path, adapter: Path) -> tuple[list[str], np.ndarray]:
             f"[twotower-pool] doc cache {path} was built without an adapter (meta.adapter is null). "
             "Adapter retrieval against a base-encoded cache mixes vector spaces — rebuild the cache."
         )
-    elif Path(cached_adapter).resolve() != adapter.resolve():
+    elif Path(cached_adapter).resolve() != adapter.resolve() and Path(cached_adapter).name != adapter.name:
         logger.warning(
             f"[twotower-pool] doc cache adapter ({cached_adapter}) ≠ runtime adapter ({adapter}). "
             "Retrieval will run in a mismatched vector space — rebuild the cache to fix."
