@@ -108,10 +108,6 @@ Distinct-2 / lexical-diversity component because an 80-row response batch tends
 to reuse friendly recommendation phrases even when the recommendations are
 properly grounded.
 
-Note: inference is deterministic per machine. Against our GPU-generated submission, CPU
-reproduction preserves the candidate pool (top-20 overlap 86%) with minor order shifts
-near score ties (GPU/CPU float and ANN backend differences).
-
 ## Stage 2 — Train from scratch
 
 Quick smoke check:
