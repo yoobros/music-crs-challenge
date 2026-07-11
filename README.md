@@ -3,7 +3,7 @@
 Conversational music recommendation (ACM RecSys Challenge 2026).
 Dialogue turns + user profile → top-20 track retrieval + a natural-language response.
 
-Competition result: 4th place as Team swyoo.
+Competition result: [4th place](https://nlp4musa.github.io/music-crs-challenge/results.html) as Team swyoo.
 
 Final pipeline (TID `ensemble__bm25_qmr-qemb_twotower_8b__gbm`):
 
@@ -74,9 +74,10 @@ ollama pull qwen3-embedding:0.6b          # local embedding server
 cp .env.example .env                      # fill in the chat-API key
 ```
 
-Download only the artifact bundle from the HuggingFace dataset repo
-(`yoobros/music-crs-2026-final`) and extract it at the repo root. It places
-feature stores, model weights, caches, and training data at their expected paths:
+Download only the artifact bundle from the
+[HuggingFace artifact repository](https://huggingface.co/datasets/yoobros/music-crs-2026-final)
+and extract it at the repo root. It places feature stores, model weights,
+caches, and training data at their expected paths:
 
 ```bash
 hf download yoobros/music-crs-2026-final repro-bundle-final-8b-gbm.tar.gz \
@@ -86,22 +87,13 @@ tar xzf repro-bundle-final-8b-gbm.tar.gz -C .
 
 ## HuggingFace Artifacts
 
-The reproducibility artifacts are hosted in the HuggingFace dataset repository:
+The [HuggingFace artifact repository](https://huggingface.co/datasets/yoobros/music-crs-2026-final)
+hosts `repro-bundle-final-8b-gbm.tar.gz` for this GitHub checkout. The bundle
+contains the submitted weights, feature stores, caches, training data, and
+GBM/PAS artifacts needed for inference and reproducibility checks.
 
-```text
-https://huggingface.co/datasets/yoobros/music-crs-2026-final
-```
-
-Download `repro-bundle-final-8b-gbm.tar.gz` from that repository and extract it
-at the root of this GitHub checkout. The bundle contains the submitted model
-weights, feature stores, metadata caches, two-tower document/query-vector
-caches, PAS assets, GBM checkpoint, and training data needed by the Stage 1
-inference and Stage 2 smoke/rebuild commands.
-
-The HuggingFace repository is an artifact store rather than a row-wise dataset,
-so its Dataset Viewer is disabled intentionally. Use this GitHub repository as
-the source-code workspace and use HuggingFace only for
-`repro-bundle-final-8b-gbm.tar.gz`.
+It is an artifact store rather than a row-wise dataset, so the Dataset Viewer is
+disabled intentionally.
 
 Generated submission outputs such as `prediction.json`, `submission.zip`, and
 `mymodule/exp/` are intentionally excluded. Stage 1 regenerates them from
