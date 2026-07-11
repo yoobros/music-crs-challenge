@@ -3,6 +3,8 @@
 Conversational music recommendation (ACM RecSys Challenge 2026).
 Dialogue turns + user profile → top-20 track retrieval + a natural-language response.
 
+Competition result: 4th place as Team swyoo.
+
 Final pipeline (TID `ensemble__bm25_qmr-qemb_twotower_8b__gbm`):
 
 ```mermaid
@@ -59,27 +61,42 @@ See [docs/technical-references.md](docs/technical-references.md).
 
 ## Setup
 
+For a fresh checkout, use the GitHub repository as the source workspace:
+
+```bash
+git clone https://github.com/yoobros/music-crs-challenge.git
+cd music-crs-challenge
+```
+
 ```bash
 uv sync                                   # Python 3.12, managed by uv
 ollama pull qwen3-embedding:0.6b          # local embedding server
 cp .env.example .env                      # fill in the chat-API key
 ```
 
-Download the artifact bundle (HuggingFace dataset repo, see release notes) and extract
-at the repo root — it places feature stores, model weights, caches, and training data
-at their expected paths:
+Download only the artifact bundle from the HuggingFace dataset repo
+(`yoobros/music-crs-2026-final`) and extract it at the repo root. It places
+feature stores, model weights, caches, and training data at their expected paths:
 
 ```bash
+hf download yoobros/music-crs-2026-final repro-bundle-final-8b-gbm.tar.gz \
+  --repo-type dataset --local-dir .
 tar xzf repro-bundle-final-8b-gbm.tar.gz -C .
 ```
 
 ## Validation Artifacts
 
-The validation upload contains two files:
+Use this GitHub repository as the source-code workspace:
 
-- `workspace.tar.gz`: cleaned code snapshot from the public validation repository.
-- `repro-bundle-final-8b-gbm.tar.gz`: model weights, feature stores, caches, and
-  training artifacts required by the pipeline.
+```text
+https://github.com/yoobros/music-crs-challenge.git
+```
+
+The HuggingFace validation dataset repo is needed only for
+`repro-bundle-final-8b-gbm.tar.gz`, which contains the model weights, feature
+stores, caches, and training artifacts required by the pipeline. It is an
+artifact repository rather than a row-wise dataset, so use the Files tab or
+`hf download`; the source workspace is maintained in GitHub.
 
 Generated submission outputs such as `prediction.json`, `submission.zip`, and
 `mymodule/exp/` are intentionally excluded. Stage 1 regenerates them from
