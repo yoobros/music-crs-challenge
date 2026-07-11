@@ -99,9 +99,9 @@ caches, PAS assets, GBM checkpoint, and training data needed by the Stage 1
 inference and Stage 2 smoke/rebuild commands.
 
 The HuggingFace repository is an artifact store rather than a row-wise dataset,
-so its Dataset Viewer is disabled intentionally. It does not provide
-`workspace.tar.gz`; use this GitHub repository as the source-code workspace and
-use HuggingFace only for `repro-bundle-final-8b-gbm.tar.gz`.
+so its Dataset Viewer is disabled intentionally. Use this GitHub repository as
+the source-code workspace and use HuggingFace only for
+`repro-bundle-final-8b-gbm.tar.gz`.
 
 Generated submission outputs such as `prediction.json`, `submission.zip`, and
 `mymodule/exp/` are intentionally excluded. Stage 1 regenerates them from
