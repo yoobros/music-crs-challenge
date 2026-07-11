@@ -84,19 +84,24 @@ hf download yoobros/music-crs-2026-final repro-bundle-final-8b-gbm.tar.gz \
 tar xzf repro-bundle-final-8b-gbm.tar.gz -C .
 ```
 
-## Validation Artifacts
+## HuggingFace Artifacts
 
-Use this GitHub repository as the source-code workspace:
+The reproducibility artifacts are hosted in the HuggingFace dataset repository:
 
 ```text
-https://github.com/yoobros/music-crs-challenge.git
+https://huggingface.co/datasets/yoobros/music-crs-2026-final
 ```
 
-The HuggingFace validation dataset repo is needed only for
-`repro-bundle-final-8b-gbm.tar.gz`, which contains the model weights, feature
-stores, caches, and training artifacts required by the pipeline. It is an
-artifact repository rather than a row-wise dataset, so use the Files tab or
-`hf download`; the source workspace is maintained in GitHub.
+Download `repro-bundle-final-8b-gbm.tar.gz` from that repository and extract it
+at the root of this GitHub checkout. The bundle contains the submitted model
+weights, feature stores, metadata caches, two-tower document/query-vector
+caches, PAS assets, GBM checkpoint, and training data needed by the Stage 1
+inference and Stage 2 smoke/rebuild commands.
+
+The HuggingFace repository is an artifact store rather than a row-wise dataset,
+so its Dataset Viewer is disabled intentionally. It does not provide
+`workspace.tar.gz`; use this GitHub repository as the source-code workspace and
+use HuggingFace only for `repro-bundle-final-8b-gbm.tar.gz`.
 
 Generated submission outputs such as `prediction.json`, `submission.zip`, and
 `mymodule/exp/` are intentionally excluded. Stage 1 regenerates them from
